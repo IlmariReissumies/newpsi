@@ -2,6 +2,8 @@ theory Subst_Term
   imports Chain
 begin
 
+definition well_formed_subst :: "(('d::fs_name) list \<times> ('e::fs_name) list) list \<Rightarrow> bool" where "well_formed_subst \<sigma> = ((filter (\<lambda>(xvec, Tvec). \<not>(length xvec = length Tvec \<and> distinct xvec)) \<sigma>) = [])"
+
 locale subst_type =
   fixes subst :: "'a::fs_name \<Rightarrow> name list \<Rightarrow> 'b::fs_name list \<Rightarrow> 'a" ("_[_::=_]" [80, 80 ,80] 130)
 
@@ -119,8 +121,6 @@ lemma seq_subst_cons[simp]:
 lemma seq_subst_term_append[simp]:
   shows "seq_subst M (\<sigma>@\<sigma>') = seq_subst (seq_subst M \<sigma>) \<sigma>'"
 by(induct \<sigma>) (auto simp add: seq_subst_def)
-
-definition well_formed_subst :: "(('d::fs_name) list \<times> ('e::fs_name) list) list \<Rightarrow> bool" where "well_formed_subst \<sigma> = ((filter (\<lambda>(xvec, Tvec). \<not>(length xvec = length Tvec \<and> distinct xvec)) \<sigma>) = [])"
 
 lemma well_formed_subst_eqvt[eqvt]:
   fixes \<sigma> :: "(('d::fs_name) list \<times> ('e::fs_name) list) list"

@@ -943,13 +943,9 @@ lemma guarded_subst[simp]:
   and   xvec :: "name list"
   and   Tvec :: "'a list"
 
-  assumes "length xvec = length Tvec"
-  and     "distinct xvec"
-
   shows "guarded P \<Longrightarrow> guarded(subs P xvec Tvec)"
   and   "guarded' I \<Longrightarrow> guarded'(subs' I xvec Tvec)"
   and   "guarded'' C \<Longrightarrow> guarded''(subs'' C xvec Tvec)"
-using assms
 by(nominal_induct P and I and C avoiding: xvec Tvec rule: psi_input_psi_case.strong_inducts) auto
 
 definition seq_subs :: "('a, 'b, 'c) psi \<Rightarrow> (name list \<times> 'a list) list \<Rightarrow> ('a, 'b, 'c) psi" ("_[<_>]" [80, 80] 130)
@@ -1053,15 +1049,13 @@ lemma seq_subst_eqvt[eqvt]:
   shows "(p \<bullet> (P[<\<sigma>>])) = (p \<bullet> P)[<(p \<bullet> \<sigma>)>]"
 by(induct \<sigma> arbitrary: P) (auto simp add: eqvts seq_subs_def)
 
-(*
+
 lemma guarded_seq_subst:
   assumes "guarded P"
-  and     "well_formed_subst \<sigma>"
 
   shows "guarded(seq_subs P \<sigma>)"
 using assms
-by(induct \<sigma> arbitrary: P) (auto dest: guarded_subst)
-*)
+  by(induct \<sigma> arbitrary: P) (auto dest: guarded_subst)
 
 end
 

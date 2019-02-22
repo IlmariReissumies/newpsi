@@ -9425,12 +9425,12 @@ lemma bang_tau_induct[consumes 1, case_names c_par1 c_par2 c_comm1 c_comm2 c_ban
   fixes \<Psi>   :: 'b
   and   P    :: "('a, 'b, 'c) psi"
   and   Rs   :: "('a, 'b, 'c) residual"
-  and   Prop :: "'d::fs_name \<Rightarrow> 'b \<Rightarrow> ('a, 'b, 'c) psi \<Rightarrow> 'a frame frame option \<Rightarrow> ('a, 'b, 'c) psi \<Rightarrow> bool"
+  and   Prop :: "'d::fs_name \<Rightarrow> 'b \<Rightarrow> ('a, 'b, 'c) psi \<Rightarrow> ('a, 'b, 'c) psi \<Rightarrow> bool"
   and   C    :: 'd
 
-  assumes "\<Psi> \<rhd> !P \<longmapsto> \<pi> @ \<tau> \<prec> P'"
-  and     r_par1: "\<And>\<pi> P' C. \<lbrakk>\<Psi> \<rhd> P \<longmapsto>\<pi> @ \<tau> \<prec> P'\<rbrakk> \<Longrightarrow> Prop C \<Psi> (P \<parallel> !P) \<pi> (P' \<parallel> !P)"
-  and     r_par2: "\<And>\<pi> P' A\<^sub>P \<Psi>\<^sub>P C. \<lbrakk>\<Psi> \<rhd> !P \<longmapsto>\<pi> @ \<tau> \<prec> P'; A\<^sub>P \<sharp>* \<Psi>; A\<^sub>P \<sharp>* P; A\<^sub>P \<sharp>* \<pi>; A\<^sub>P \<sharp>* P'; distinct A\<^sub>P; extract_frame P = \<langle>A\<^sub>P,\<Psi>\<^sub>P\<rangle>; guarded P; \<And>C. Prop C \<Psi> (!P) \<pi> P'\<rbrakk> \<Longrightarrow> Prop C \<Psi> (P \<parallel> !P) (append_at_front_prov_option \<pi> A\<^sub>P) (P \<parallel> P')"
+  assumes "\<Psi> \<rhd> !P \<longmapsto> None @ \<tau> \<prec> P'"
+  and     r_par1: "\<And>P' C. \<lbrakk>\<Psi> \<rhd> P \<longmapsto>None @ \<tau> \<prec> P'\<rbrakk> \<Longrightarrow> Prop C \<Psi> (P \<parallel> !P) (P' \<parallel> !P)"
+  and     r_par2: "\<And>P' C. \<lbrakk>\<Psi> \<rhd> !P \<longmapsto>None @ \<tau> \<prec> P'; guarded P; \<And>C. Prop C \<Psi> (!P) P'\<rbrakk> \<Longrightarrow> Prop C \<Psi> (P \<parallel> !P) (P \<parallel> P')"
   and     r_comm1: "\<And>M N P' K xvec A\<^sub>P \<Psi>\<^sub>P yvec zvec P'' C. \<lbrakk>\<Psi> \<rhd> P \<longmapsto>Some(\<langle>A\<^sub>P; yvec, K\<rangle>) @ M\<lparr>N\<rparr> \<prec> P'; \<Psi> \<rhd> !P \<longmapsto>Some(F_assert(\<langle>zvec, M\<rangle>)) @ K\<lparr>\<nu>*xvec\<rparr>\<langle>N\<rangle> \<prec> P''; extract_frame P = \<langle>A\<^sub>P,\<Psi>\<^sub>P\<rangle>; distinct A\<^sub>P;
              xvec \<sharp>* \<Psi>; xvec \<sharp>* P; xvec \<sharp>* M; xvec \<sharp>* K; xvec \<sharp>* C; distinct xvec; distinct yvec; distinct zvec; yvec \<sharp>* C; zvec \<sharp>* C; A\<^sub>P \<sharp>* C;
              A\<^sub>P \<sharp>* \<Psi>; A\<^sub>P \<sharp>* P; A\<^sub>P \<sharp>* M; A\<^sub>P \<sharp>* P'; A\<^sub>P \<sharp>* P'';
@@ -9438,18 +9438,19 @@ lemma bang_tau_induct[consumes 1, case_names c_par1 c_par2 c_comm1 c_comm2 c_ban
              yvec \<sharp>* A\<^sub>P; yvec \<sharp>* P'; yvec \<sharp>* P''; yvec \<sharp>* zvec;
              zvec \<sharp>* \<Psi>; zvec \<sharp>* \<Psi>\<^sub>P; zvec \<sharp>* P; zvec \<sharp>* K;
              zvec \<sharp>* A\<^sub>P; zvec \<sharp>* P'; zvec \<sharp>* P''
-\<rbrakk> \<Longrightarrow> Prop C \<Psi> (P \<parallel> !P) (None) (\<lparr>\<nu>*xvec\<rparr>(P' \<parallel> P''))"
+\<rbrakk> \<Longrightarrow> Prop C \<Psi> (P \<parallel> !P) (\<lparr>\<nu>*xvec\<rparr>(P' \<parallel> P''))"
   and     r_comm2: "\<And>M xvec N P' K A\<^sub>P \<Psi>\<^sub>P  yvec zvec P'' C. \<lbrakk>\<Psi> \<rhd> P \<longmapsto>Some(\<langle>A\<^sub>P; yvec, K\<rangle>) @ M\<lparr>\<nu>*xvec\<rparr>\<langle>N\<rangle> \<prec> P'; \<Psi> \<rhd> !P \<longmapsto>Some(F_assert(\<langle>zvec, M\<rangle>)) @ K\<lparr>N\<rparr> \<prec> P'';  extract_frame P = \<langle>A\<^sub>P,\<Psi>\<^sub>P\<rangle>; distinct A\<^sub>P;
                                              xvec \<sharp>* \<Psi>; xvec \<sharp>* P; xvec \<sharp>* M; xvec \<sharp>* K; xvec \<sharp>* C; distinct xvec; distinct yvec; distinct zvec; yvec \<sharp>* C; zvec \<sharp>* C; A\<^sub>P \<sharp>* C;
              A\<^sub>P \<sharp>* \<Psi>; A\<^sub>P \<sharp>* P; A\<^sub>P \<sharp>* M; A\<^sub>P \<sharp>* P'; A\<^sub>P \<sharp>* P'';
              yvec \<sharp>* \<Psi>; yvec \<sharp>* \<Psi>\<^sub>P; yvec \<sharp>* P; yvec \<sharp>* M;
              yvec \<sharp>* A\<^sub>P; yvec \<sharp>* P'; yvec \<sharp>* P''; yvec \<sharp>* zvec;
              zvec \<sharp>* \<Psi>; zvec \<sharp>* \<Psi>\<^sub>P; zvec \<sharp>* P; zvec \<sharp>* K;
-             zvec \<sharp>* A\<^sub>P; zvec \<sharp>* P'; zvec \<sharp>* P''\<rbrakk> \<Longrightarrow> Prop C \<Psi> (P \<parallel> !P) (None) (\<lparr>\<nu>*xvec\<rparr>(P' \<parallel> P''))"
-  and     r_bang: "\<And>\<pi> P' C. \<lbrakk>\<Psi> \<rhd> P \<parallel> !P \<longmapsto> \<pi> @ \<tau> \<prec> P'; \<And>C. Prop C \<Psi> (P \<parallel> !P) \<pi> P'; guarded P\<rbrakk> \<Longrightarrow> Prop C \<Psi> (!P) (map_option (F_assert o push_prov) \<pi>) P'"
-  shows "Prop C \<Psi> (!P) \<pi> P'"
-  using `\<Psi> \<rhd> !P \<longmapsto> \<pi> @ \<tau> \<prec> P'`
-  by(nominal_induct \<Psi> P \<pi> Rs=="\<tau> \<prec> P'" avoiding: C arbitrary: P' rule: bang_induct) (auto simp add: residual_inject intro: r_par1 r_par2 r_comm1 r_comm2 r_bang simp del: append_at_front_prov_option.simps)
+             zvec \<sharp>* A\<^sub>P; zvec \<sharp>* P'; zvec \<sharp>* P''\<rbrakk> \<Longrightarrow> Prop C \<Psi> (P \<parallel> !P) (\<lparr>\<nu>*xvec\<rparr>(P' \<parallel> P''))"
+  and     r_bang: "\<And>P' C. \<lbrakk>\<Psi> \<rhd> P \<parallel> !P \<longmapsto> None @ \<tau> \<prec> P'; \<And>C. Prop C \<Psi> (P \<parallel> !P) P'; guarded P\<rbrakk> \<Longrightarrow> Prop C \<Psi> (!P) P'"
+  shows "Prop C \<Psi> (!P) P'"
+  using `\<Psi> \<rhd> !P \<longmapsto> None @ \<tau> \<prec> P'`
+  by(nominal_induct \<Psi> P \<pi>=="None::'a frame frame option" Rs=="\<tau> \<prec> P'" avoiding: C arbitrary: P' rule: bang_induct)
+    (force simp add: residual_inject intro: r_par1 r_par2 r_comm1 r_comm2 r_bang intro: tau_no_provenance'')+
 
 lemma bang_induct'[consumes 2, case_names c_alpha c_par1 c_par2 c_comm1 c_comm2 c_bang]:
   fixes \<Psi>    :: 'b

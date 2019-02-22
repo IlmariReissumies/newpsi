@@ -19,6 +19,8 @@ session NewPsi = "HOL-Nominal" +
     "Sim_Struct_Cong"
     "Structural_Congruence"
     "Bisim_Struct_Cong"
+    "Close_Subst"
+    "Bisim_Subst"
 
 (*
  * Prove that the new semantics is a conservative extension.

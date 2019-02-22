@@ -1418,13 +1418,13 @@ proof -
   from `\<Psi> \<rhd> !P \<longmapsto>\<pi> @ \<tau> \<prec> P'` have "guarded P" apply - by(ind_cases "\<Psi> \<rhd> !P \<longmapsto>\<pi> @ \<tau> \<prec> P'") (auto simp add: psi.inject)
   assume "\<And>Q' R T. \<lbrakk>\<Psi> \<rhd> !Q \<longmapsto>None @ \<tau> \<prec> Q'; \<Psi> \<rhd> P' \<sim> R \<parallel> !P; \<Psi> \<rhd> Q' \<sim> T \<parallel> !Q; \<Psi> \<rhd> R \<sim> T; ((supp R)::name set) \<subseteq> supp P';
                     ((supp T)::name set) \<subseteq> supp Q'\<rbrakk> \<Longrightarrow> thesis"
-  moreover from `\<Psi> \<rhd> !P \<longmapsto>\<pi> @ \<tau> \<prec> P'` `\<Psi> \<rhd> P \<sim> Q` `guarded Q` 
+  moreover from tau_no_provenance'[OF `\<Psi> \<rhd> !P \<longmapsto>\<pi> @ \<tau> \<prec> P'`] `\<Psi> \<rhd> P \<sim> Q` `guarded Q` 
   have "\<exists>Q' T R . \<Psi> \<rhd> !Q \<longmapsto>None @ \<tau>  \<prec> Q' \<and> \<Psi> \<rhd> P' \<sim> R \<parallel> !P \<and> \<Psi> \<rhd> Q' \<sim> T \<parallel> !Q \<and> \<Psi> \<rhd> R \<sim> T \<and>
                   ((supp R)::name set) \<subseteq> supp P' \<and> ((supp T)::name set) \<subseteq> supp Q'"
   proof(nominal_induct avoiding: Q rule: bang_tau_induct)
-    case(c_par1 \<pi> P' Q)
+    case(c_par1 P' Q)
     have "bn(\<tau>) \<sharp>* \<Psi>" and "bn(\<tau>) \<sharp>* Q" by simp_all
-    with `\<Psi> \<rhd> P \<sim> Q` `\<Psi> \<rhd> P \<longmapsto>\<pi> @ \<tau> \<prec> P'`
+    with `\<Psi> \<rhd> P \<sim> Q` `\<Psi> \<rhd> P \<longmapsto>None @ \<tau> \<prec> P'`
     obtain \<pi>' Q' where Q_trans: "\<Psi> \<rhd> Q \<longmapsto>\<pi>' @ \<tau> \<prec> Q'" and "\<Psi> \<rhd> P' \<sim> Q'"
       by(blast dest: bisimE simE)
     from Q_trans have "\<Psi> \<otimes> S_bottom' \<rhd> Q \<longmapsto>\<pi>' @ \<tau> \<prec> Q'" by(metis stat_eq_transition Identity Assertion_stat_eq_sym)
@@ -1437,8 +1437,8 @@ proof -
     moreover have "\<Psi> \<rhd> Q' \<parallel> !Q \<sim> Q' \<parallel> !Q" by(rule bisim_reflexive)
     ultimately show ?case using `\<Psi> \<rhd> P' \<sim> Q'` by(force simp add: psi.supp)
   next
-    case(c_par2 \<pi> P' A\<^sub>P \<Psi>\<^sub>P Q)
-    then obtain Q' \<pi>' T R where Q_trans: "\<Psi> \<rhd> !Q \<longmapsto>\<pi>' @ \<tau> \<prec> Q'" and "\<Psi> \<rhd> P' \<sim> R \<parallel> !P" and "\<Psi> \<rhd> Q' \<sim> T \<parallel> !Q" and "\<Psi> \<rhd> R \<sim> T"
+    case(c_par2 P')
+    then obtain Q' T R where Q_trans: "\<Psi> \<rhd> !Q \<longmapsto>None @ \<tau> \<prec> Q'" and "\<Psi> \<rhd> P' \<sim> R \<parallel> !P" and "\<Psi> \<rhd> Q' \<sim> T \<parallel> !Q" and "\<Psi> \<rhd> R \<sim> T"
                          and suppR: "((supp R)::name set) \<subseteq> supp P'" and suppT: "((supp T)::name set) \<subseteq> supp Q'"
       by blast
     note Q_trans
@@ -1592,7 +1592,7 @@ proof -
       by(auto simp add: psi.supp res_chain_supp)
     ultimately show ?case by blast
   next
-    case(c_bang \<pi> P' Q)
+    case(c_bang P' Q)
     then obtain Q' T R where Q_trans: "\<Psi> \<rhd> !Q \<longmapsto>None @ \<tau> \<prec> Q'" and "\<Psi> \<rhd> P' \<sim> R \<parallel> (P \<parallel> !P)" and "\<Psi> \<rhd> Q' \<sim> T \<parallel> !Q" and "\<Psi> \<rhd> R \<sim> T"
                          and suppR: "((supp R)::name set) \<subseteq> supp P'" and suppT: "((supp T)::name set) \<subseteq> supp Q'"
       by blast
