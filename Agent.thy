@@ -86,7 +86,6 @@ lemma psi_cases_fresh[simp]:
   and   Cs :: "('c::fs_name \<times> ('a::fs_name, 'b::fs_name, 'c) psi) list"
   
   shows "x \<sharp> psi_cases Cs = x \<sharp> Cs"
-using assms
 by(induct Cs)
   (auto simp add: fresh_list_nil fresh_list_cons)
 
@@ -1054,6 +1053,7 @@ lemma seq_subst_eqvt[eqvt]:
   shows "(p \<bullet> (P[<\<sigma>>])) = (p \<bullet> P)[<(p \<bullet> \<sigma>)>]"
 by(induct \<sigma> arbitrary: P) (auto simp add: eqvts seq_subs_def)
 
+(*
 lemma guarded_seq_subst:
   assumes "guarded P"
   and     "well_formed_subst \<sigma>"
@@ -1061,6 +1061,7 @@ lemma guarded_seq_subst:
   shows "guarded(seq_subs P \<sigma>)"
 using assms
 by(induct \<sigma> arbitrary: P) (auto dest: guarded_subst)
+*)
 
 end
 

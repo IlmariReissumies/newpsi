@@ -620,7 +620,6 @@ lemma res_nil_right:
   and   Rel :: "('b \<times> ('a, 'b, 'c) psi \<times> ('a, 'b, 'c) psi) set"
 
   shows "\<Psi> \<rhd> \<zero> \<leadsto>[Rel] \<lparr>\<nu>x\<rparr>\<zero>"
-using assms
 apply(auto simp add: simulation_def)
 by(cases rule: semantics.cases) (auto simp add: psi.inject alpha')
 

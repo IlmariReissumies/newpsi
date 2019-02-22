@@ -1562,7 +1562,6 @@ lemma bn_fresh_residual[simp]:
   fixes \<alpha> :: "('a::fs_name) action"
 
   shows "(bn \<alpha>) \<sharp>* (\<alpha> \<prec> P) = bn \<alpha> \<sharp>* (subject \<alpha>)"
-using assms
 by(nominal_induct \<alpha> rule: action.strong_induct)
   (auto simp add: residual_fresh fresh_some fresh_star_def)
 
@@ -1652,7 +1651,7 @@ notation subs ("_[_::=_]" [100, 100, 100] 100)
 notation Assertion_stat_eq ("_ \<simeq> _" [80, 80] 80)
 notation Frame_stat_eq ("_ \<simeq>\<^sub>F _" [80, 80] 80)
 notation S_bottom' ("\<one>" 190)
-abbreviation insert_assertion' ("insert_assertion") where "insert_assertion' \<equiv> assertion_aux.insert_assertion (op \<otimes>)"
+abbreviation insert_assertion' ("insert_assertion") where "insert_assertion' \<equiv> assertion_aux.insert_assertion (\<otimes>)"
 
 nominal_primrec push_prov :: "'a frame frame \<Rightarrow> 'a frame"
   where

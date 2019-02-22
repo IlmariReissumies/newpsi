@@ -148,7 +148,6 @@ by(simp add: well_formed_subst_def)
 
 lemma well_formed_cons[simp]:
   shows "well_formed_subst((xvec, Tvec)#\<sigma>) = (length xvec = length Tvec \<and> distinct xvec \<and> well_formed_subst \<sigma>)"
-using assms
 by(simp add: well_formed_subst_def) auto
 
 lemma well_formed_append[simp]:
@@ -345,7 +344,6 @@ by(simp add: well_formed_subst_def)
 
 lemma well_formed_cons[simp]:
   shows "well_formed_subst((xvec, Tvec)#\<sigma>) = (length xvec = length Tvec \<and> distinct xvec \<and> well_formed_subst \<sigma>)"
-using assms
 by(simp add: well_formed_subst_def) auto
 
 lemma well_formed_append[simp]:

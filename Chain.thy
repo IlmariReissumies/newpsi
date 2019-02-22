@@ -1,5 +1,5 @@
 theory Chain
-  imports Nominal
+  imports "HOL-Nominal.Nominal"
 begin
 
 lemma pt_set_nil: 
@@ -488,7 +488,6 @@ lemma fresh_chain_sym[simp]:
   and   yvec :: "name list"
   
   shows   "xvec \<sharp>* yvec = yvec \<sharp>* xvec"
-using assms
 by(auto simp add: fresh_star_def fresh_def name_list_supp)
 
 lemmas [eqvt] = perm_cart_prod[OF pt_name_inst, OF pt_name_inst, OF at_name_inst]
@@ -643,7 +642,7 @@ by(simp add: pt2[OF pt_name_inst, THEN sym])
 
 simproc_setup cons_perm ("((x, y)#p) \<bullet> C") = {*
   fn _ => fn _ => fn ct => 
-     case term_of ct of 
+     case Thm.term_of ct of 
         Const (@{const_name perm}, _ ) $ (Const (@{const_name Cons}, _) $ _ $ p) $ _ =>
               (case p of Const (@{const_name Nil}, _) => NONE
                        | _ => SOME(mk_meta_eq @{thm cons_perm})) 

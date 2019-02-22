@@ -218,7 +218,6 @@ qed
 
 lemma bisim_eqvt[simp]:
   shows "eqvt bisim"
-using assms
 by(auto simp add: eqvt_def bisim_closed)
 
 lemma stat_eq_bisim:
@@ -568,7 +567,7 @@ proof -
     case(c_sim \<Psi> P Q)
     thus ?case
       apply -
-      apply(case_tac "(\<Psi>, P, Q) \<in> ?X")
+      apply(case_tac "(\<Psi>, P, Q) \<in> X")
       apply(rule_tac r_sim)
       apply simp
       apply(clarify)
