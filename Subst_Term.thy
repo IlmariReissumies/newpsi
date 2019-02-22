@@ -6,12 +6,6 @@ locale subst_type =
   fixes subst :: "'a::fs_name \<Rightarrow> name list \<Rightarrow> 'b::fs_name list \<Rightarrow> 'a" ("_[_::=_]" [80, 80 ,80] 130)
 
   assumes eq[eqvt]: "\<And>p::name prm. (p \<bullet> (M[xvec::=Tvec])) = ((p \<bullet> M)[(p \<bullet> xvec)::=(p \<bullet> Tvec)])"
-(*  and subst1:       "\<And>xvec Tvec T x. \<lbrakk>length xvec = length Tvec; distinct xvec; (x::name) \<sharp> T[xvec::=Tvec]; x \<sharp> xvec\<rbrakk> \<Longrightarrow> x \<sharp> T"
-  and subst2:       "\<And>xvec Tvec T x. \<lbrakk>length xvec = length Tvec; distinct xvec; (x::name) \<sharp> T; x \<sharp> Tvec\<rbrakk> \<Longrightarrow> x \<sharp> T[xvec::=Tvec]"
-  and subst3:       "\<And>xvec Tvec T x. \<lbrakk>length xvec = length Tvec; distinct xvec; set(xvec) \<subseteq> supp(T); (x::name) \<sharp> T[xvec::=Tvec]\<rbrakk> \<Longrightarrow> x \<sharp> Tvec"
-  and subst4:       "\<And>xvec Tvec T. \<lbrakk>length xvec = length Tvec; distinct xvec; xvec \<sharp>* T\<rbrakk> \<Longrightarrow> T[xvec::=Tvec] = T"
-  and subst5:       "\<And>xvec Tvec yvec Tvec' T. \<lbrakk>length xvec = length Tvec; distinct xvec; length yvec = length Tvec'; distinct yvec; yvec \<sharp>* xvec; yvec \<sharp>* Tvec\<rbrakk> \<Longrightarrow>
-                                                T[(xvec@yvec)::=(Tvec@Tvec')] = (T[xvec::=Tvec])[yvec::=Tvec']"*)
   and renaming:     "\<And>xvec Tvec p T. \<lbrakk>length xvec = length Tvec; (set p) \<subseteq> set xvec \<times> set (p \<bullet> xvec);
                                       distinct_perm p; (p \<bullet> xvec) \<sharp>* T\<rbrakk> \<Longrightarrow>
                                       T[xvec::=Tvec] = (p \<bullet> T)[(p \<bullet> xvec)::=Tvec]"
@@ -187,12 +181,7 @@ locale strong_subst_type =
   fixes subst :: "'a::fs_name \<Rightarrow> name list \<Rightarrow> 'b::fs_name list \<Rightarrow> 'a" ("_[_::=_]" [80, 80 ,80] 130)
 
   assumes eq[eqvt]: "\<And>p::name prm. (p \<bullet> (M[xvec::=Tvec])) = ((p \<bullet> M)[(p \<bullet> xvec)::=(p \<bullet> Tvec)])"
-(*  and subst1:       "\<And>xvec Tvec T x. \<lbrakk>length xvec = length Tvec; distinct xvec; (x::name) \<sharp> T[xvec::=Tvec]; x \<sharp> xvec\<rbrakk> \<Longrightarrow> x \<sharp> T"
-  and subst2:       "\<And>xvec Tvec T x. \<lbrakk>length xvec = length Tvec; distinct xvec; (x::name) \<sharp> T; x \<sharp> Tvec\<rbrakk> \<Longrightarrow> x \<sharp> T[xvec::=Tvec]"*)
   and subst3:       "\<And>xvec Tvec T x. \<lbrakk>length xvec = length Tvec; distinct xvec; set(xvec) \<subseteq> supp(T); (x::name) \<sharp> T[xvec::=Tvec]\<rbrakk> \<Longrightarrow> x \<sharp> Tvec"
-(*  and subst4:       "\<And>xvec Tvec T. \<lbrakk>length xvec = length Tvec; distinct xvec; xvec \<sharp>* T\<rbrakk> \<Longrightarrow> T[xvec::=Tvec] = T"
-  and subst5:       "\<And>xvec Tvec yvec Tvec' T. \<lbrakk>length xvec = length Tvec; distinct xvec; length yvec = length Tvec'; distinct yvec; yvec \<sharp>* xvec; yvec \<sharp>* Tvec\<rbrakk> \<Longrightarrow>
-                                                T[(xvec@yvec)::=(Tvec@Tvec')] = (T[xvec::=Tvec])[yvec::=Tvec']"*)
   and renaming:     "\<And>xvec Tvec p T. \<lbrakk>length xvec = length Tvec; (set p) \<subseteq> set xvec \<times> set (p \<bullet> xvec);
                                       distinct_perm p; (p \<bullet> xvec) \<sharp>* T\<rbrakk> \<Longrightarrow>
                                       T[xvec::=Tvec] = (p \<bullet> T)[(p \<bullet> xvec)::=Tvec]"

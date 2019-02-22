@@ -1,5 +1,5 @@
 theory Old_Bisimulation
-  imports Old_Simulation Bisimulation
+  imports Old_Simulation "NewPsi.Bisimulation"
 begin
 
 context old_psi begin
@@ -8,9 +8,7 @@ lemma old_mono_coinduct: "\<And>x y xa xb xc P Q \<Psi>.
                       x \<le> y \<Longrightarrow>
                       (\<Psi> \<rhd> Q \<leadsto>[{(xc, xb, xa). x xc xb xa}]\<^sub>O P) \<longrightarrow>
                      (\<Psi> \<rhd> Q \<leadsto>[{(xb, xa, xc). y xb xa xc}]\<^sub>O P)"
-apply auto
-apply(rule old_monotonic)
-by(auto dest: le_funE)
+by(auto intro: old_monotonic dest:le_funE)
 
 coinductive_set old_bisim :: "('b \<times> ('a, 'b, 'c) psi \<times> ('a, 'b, 'c) psi) set" 
 where

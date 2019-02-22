@@ -1,5 +1,5 @@
 theory Old_Semantics
-  imports Semantics
+  imports "NewPsi.Semantics"
 begin
 
 locale old_psi = env subst_term subst_assert subst_cond S_compose' S_imp' S_bottom' S_chan_eq'

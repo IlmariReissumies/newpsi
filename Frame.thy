@@ -1974,35 +1974,7 @@ proof -
   ultimately show ?thesis
     by(blast dest: Assertion_stat_eq_trans)
 qed
-(*
-lemma frame_chan_eq_sym:
-  fixes F :: "'b frame"
-  and   M :: 'a
-  and   N :: 'a
 
-  assumes "F \<turnstile>\<^sub>F M \<leftrightarrow> N"
-  
-  shows "F \<turnstile>\<^sub>F N \<leftrightarrow> M"
-using assms
-apply(auto simp add: Frame_imp_def)
-by(force intro: chan_eq_sym simp add: Frame_imp_def)
-
-lemma frame_chan_eq_trans:
-  fixes F :: "'b frame"
-  and   M :: 'a
-  and   N :: 'a
-
-  assumes "F \<turnstile>\<^sub>F M \<leftrightarrow> N"
-  and     "F \<turnstile>\<^sub>F N \<leftrightarrow> L"
-  
-  shows "F \<turnstile>\<^sub>F M \<leftrightarrow> L"
-proof -
-  obtain A\<^sub>F \<Psi>\<^sub>F where "F = \<langle>A\<^sub>F, \<Psi>\<^sub>F\<rangle>" and "A\<^sub>F \<sharp>* (M, N, L)"
-    by(rule fresh_frame)
-  with assms show ?thesis
-    by(force dest: frame_impE intro: frame_impI chan_eq_trans)
-qed
-*)
 lemma frame_int_associativity:
   fixes A\<^sub>F  :: "name list"
   and   \<Psi>   :: 'b

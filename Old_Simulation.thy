@@ -1,5 +1,5 @@
 theory Old_Simulation
-  imports Old_Semantics Simulation
+  imports Old_Semantics "NewPsi.Simulation"
 begin
 
 context old_psi begin
